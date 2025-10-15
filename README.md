@@ -3,291 +3,315 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kite AI Quiz</title>
+  <title>Kite Blockchain Quiz</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f4f1ea;
-      color: #3a2f2a;
+      background: linear-gradient(135deg, #5e5ce6, #9b8cf3);
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      color: #333;
       margin: 0;
     }
 
     .quiz-container {
-      background: #fffaf4;
+      background: white;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       width: 90%;
-      max-width: 500px;
-      padding: 30px;
+      max-width: 600px;
+      padding: 40px;
       text-align: center;
-    }
-
-    .logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 10px;
+      transition: 0.4s ease;
     }
 
     h1 {
-      font-size: 28px;
-      color: #4b3a2e;
-      margin-bottom: 20px;
+      color: #5e5ce6;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 15px;
     }
 
     button {
-      background-color: #c6a77b;
-      color: white;
+      background-color: #6d63ff;
       border: none;
-      padding: 12px 24px;
-      border-radius: 12px;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: 0.3s;
     }
 
     button:hover {
-      background-color: #b08c64;
-    }
-
-    .question {
-      font-size: 18px;
-      margin-bottom: 20px;
+      background-color: #4a41d6;
     }
 
     .option {
-      display: block;
-      background: #f7efe3;
-      border: 1px solid #d8c7a4;
+      background: #f4f3ff;
+      border: 2px solid transparent;
+      padding: 12px;
       border-radius: 12px;
-      padding: 10px;
       margin: 10px 0;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.3s;
     }
 
     .option:hover {
-      background: #e9dcc2;
+      background: #e8e6ff;
     }
 
-    .correct {
-      background-color: #a8d5ba !important;
-      border-color: #7fbf8e;
+    .option.correct {
+      background: #d4edda;
+      border-color: #28a745;
     }
 
-    .incorrect {
-      background-color: #e9a8a8 !important;
-      border-color: #d37a7a;
+    .option.wrong {
+      background: #f8d7da;
+      border-color: #dc3545;
     }
 
     .hidden {
       display: none;
     }
 
-    .score {
-      font-size: 22px;
-      margin-top: 20px;
-      color: #4b3a2e;
+    .question {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .result {
+      font-size: 20px;
+      font-weight: bold;
+      color: #5e5ce6;
+    }
+
+    .emoji {
+      font-size: 26px;
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <img src="https://i.ibb.co/9V3Z9tz/logo.png" alt="Kite Logo" class="logo" />
-    <h1>KITE AI Quiz</h1>
-    <div id="quiz">
-      <div id="welcome-screen">
-        <p>Welcome to the <b>Kite AI Knowledge Quiz!</b><br><br>
-        Test how well you know about Kite — the blockchain for the agentic internet 🪶</p>
-        <button id="start-btn">Start Quiz</button>
-      </div>
+  <div class="quiz-container" id="quiz">
+    <h1>KITE</h1>
+    <p>Blockchain for the Agentic Internet 🚀</p>
 
-      <div id="question-container" class="hidden">
-        <div id="question" class="question"></div>
-        <div id="options"></div>
-        <button id="next-btn" class="hidden">Next Question</button>
-      </div>
+    <div id="start-screen">
+      <h2>Welcome to the Kite Quiz!</h2>
+      <p>Ready to see how much you know about the internet built for AI agents? Let's go!</p>
+      <button id="start-btn">Start Quiz</button>
+    </div>
 
-      <div id="result" class="hidden">
-        <h2>🎯 Quiz Completed!</h2>
-        <p class="score" id="score"></p>
-        <button id="restart-btn">Restart Quiz</button>
-      </div>
+    <div id="question-screen" class="hidden">
+      <p id="question-number"></p>
+      <p class="question" id="question-text"></p>
+      <div id="options-container"></div>
+      <button id="next-btn" class="hidden">Next Question</button>
+    </div>
+
+    <div id="result-screen" class="hidden">
+      <h2>🎉 Quiz Completed!</h2>
+      <p class="result" id="score-text"></p>
+      <p id="reaction"></p>
+      <button id="restart-btn">Restart Quiz</button>
     </div>
   </div>
 
   <script>
     const quizData = [
       {
-        question: "🤖 What does Kite primarily focus on?",
+        question: "🌐 What does Kite aim to bring to the internet?",
         options: [
-          "Gaming NFTs",
-          "AI and Agentic Internet",
-          "Social Media Tokens",
-          "DeFi Yield Farming",
+          "More memes and cat videos 😸",
+          "Identity, trust, and scalable payments for AI agents",
+          "Faster web browsers",
+          "Social media for robots"
         ],
-        answer: 1,
+        correct: 1
       },
       {
-        question: "🔐 What is 'Agent Native Identity' in Kite?",
+        question: "🤖 What makes Kite different from traditional blockchains?",
         options: [
-          "A new blockchain consensus mechanism",
-          "Portable identity for agents across apps",
-          "A payment wallet for humans",
-          "A 2FA system for dApps",
+          "It focuses on AI agents and the agentic internet",
+          "It uses emojis to verify transactions 😂",
+          "It runs on quantum computers only",
+          "It has no need for smart contracts"
         ],
-        answer: 1,
+        correct: 0
       },
       {
-        question: "⚙️ Kite is compatible with which virtual machine?",
-        options: ["KiteVM", "SolanaVM", "EVM", "MoveVM"],
-        answer: 2,
+        question: "🧩 What does 'EVM-compatible' mean in Kite?",
+        options: [
+          "It can play video games",
+          "It supports Ethereum smart contracts",
+          "It replaces Ethereum entirely",
+          "It has its own app store"
+        ],
+        correct: 1
       },
       {
-        question: "💳 What type of settlements does Kite support?",
+        question: "🔐 Agent Native Identity allows agents to...",
         options: [
-          "Crypto-to-fiat only",
-          "High-fee token transfers",
-          "Stablecoin-native instant micropayments",
-          "Only BTC transactions",
+          "Share their owner’s reputation securely",
+          "Forget passwords daily",
+          "Clone themselves infinitely",
+          "Create memes autonomously"
         ],
-        answer: 2,
+        correct: 0
       },
       {
-        question: "🧠 What is Proof of AI used for in Kite?",
+        question: "💳 Kite’s Agent Native Payments make it possible to...",
         options: [
-          "Attribution and rewards for AI contributions",
-          "Energy-efficient mining",
-          "Random block generation",
-          "Social reputation tracking",
+          "Pay machines instantly with stablecoins",
+          "Buy NFTs on Mars",
+          "Pay using only Bitcoin",
+          "Send payments via email"
         ],
-        answer: 0,
+        correct: 0
       },
       {
-        question: "🧩 Kite’s architecture is designed to be:",
+        question: "🛠️ What’s unique about Kite’s architecture?",
         options: [
-          "Rigid and centralized",
-          "Modular and flexible",
-          "Private and isolated",
-          "Layer-0 only",
+          "It’s modular and developers can pick components freely",
+          "It only works on old browsers",
+          "It uses a single fixed structure for all projects",
+          "It doesn’t allow SDK integrations"
         ],
-        answer: 1,
+        correct: 0
       },
       {
-        question: "🌐 What does MCP stand for in Kite’s ecosystem?",
+        question: "⚙️ Proof of AI in Kite helps with...",
         options: [
-          "Model Context Protocol",
-          "Machine Code Platform",
-          "Multi Chain Processing",
-          "Main Chain Protocol",
+          "Validating agent contributions and rewards",
+          "Detecting human errors",
+          "Mining using physical gold",
+          "Running 3D games"
         ],
-        answer: 0,
+        correct: 0
       },
       {
-        question: "⚡ What kind of blockchain is Kite?",
+        question: "🎯 Why should developers build on Kite?",
         options: [
-          "Layer-2 Optimistic Rollup",
-          "Sovereign Layer-1",
-          "Sidechain of Ethereum",
-          "Private Consortium Chain",
+          "Because it has AI-first infrastructure and low latency",
+          "Because it mines crypto faster",
+          "Because it gives free pizza",
+          "Because it doesn’t use smart contracts"
         ],
-        answer: 1,
+        correct: 0
       },
       {
-        question: "👥 Which audience does Kite primarily target?",
+        question: "👥 Who can benefit from the Kite ecosystem?",
         options: [
-          "AI users and blockchain developers",
-          "Casual gamers",
-          "Social media influencers",
-          "Traditional banks",
+          "AI users, researchers, and blockchain developers",
+          "Only gamers",
+          "Only government agencies",
+          "Only NFT traders"
         ],
-        answer: 0,
+        correct: 0
       },
       {
-        question: "💼 What kind of payments infrastructure does Kite eliminate?",
+        question: "🚀 The goal of Kite is to build...",
         options: [
-          "Simple wallet transfers",
-          "Overcomplicated, high-fee systems",
-          "Mobile recharge systems",
-          "Centralized fiat rails",
+          "An AI-native, trustworthy, and scalable internet",
+          "A gaming console",
+          "A social network for pets",
+          "A meme-based blockchain"
         ],
-        answer: 1,
-      },
+        correct: 0
+      }
     ];
 
     const startBtn = document.getElementById("start-btn");
-    const questionContainer = document.getElementById("question-container");
-    const questionEl = document.getElementById("question");
-    const optionsEl = document.getElementById("options");
+    const questionScreen = document.getElementById("question-screen");
+    const startScreen = document.getElementById("start-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const questionNumber = document.getElementById("question-number");
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
     const nextBtn = document.getElementById("next-btn");
-    const resultEl = document.getElementById("result");
-    const scoreEl = document.getElementById("score");
+    const scoreText = document.getElementById("score-text");
     const restartBtn = document.getElementById("restart-btn");
-    const welcomeScreen = document.getElementById("welcome-screen");
+    const reaction = document.getElementById("reaction");
 
     let currentQuestion = 0;
     let score = 0;
 
-    startBtn.addEventListener("click", () => {
-      welcomeScreen.classList.add("hidden");
-      questionContainer.classList.remove("hidden");
+    startBtn.addEventListener("click", startQuiz);
+    nextBtn.addEventListener("click", nextQuestion);
+    restartBtn.addEventListener("click", restartQuiz);
+
+    function startQuiz() {
+      startScreen.classList.add("hidden");
+      questionScreen.classList.remove("hidden");
       loadQuestion();
-    });
+    }
 
     function loadQuestion() {
-      const q = quizData[currentQuestion];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = "";
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement("div");
-        btn.classList.add("option");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => checkAnswer(i, btn));
-        optionsEl.appendChild(btn);
+      const current = quizData[currentQuestion];
+      questionNumber.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+      questionText.textContent = current.question;
+      optionsContainer.innerHTML = "";
+
+      current.options.forEach((option, index) => {
+        const button = document.createElement("div");
+        button.classList.add("option");
+        button.textContent = option;
+        button.addEventListener("click", () => selectOption(index));
+        optionsContainer.appendChild(button);
       });
     }
 
-    function checkAnswer(selected, btn) {
-      const correct = quizData[currentQuestion].answer;
+    function selectOption(selected) {
+      const current = quizData[currentQuestion];
       const options = document.querySelectorAll(".option");
-      options.forEach(o => o.style.pointerEvents = "none");
 
-      if (selected === correct) {
-        btn.classList.add("correct");
-        score++;
-      } else {
-        btn.classList.add("incorrect");
-        options[correct].classList.add("correct");
-      }
+      options.forEach((option, index) => {
+        option.style.pointerEvents = "none";
+        if (index === current.correct) {
+          option.classList.add("correct");
+        } else if (index === selected && index !== current.correct) {
+          option.classList.add("wrong");
+        }
+      });
 
+      if (selected === current.correct) score++;
       nextBtn.classList.remove("hidden");
     }
 
-    nextBtn.addEventListener("click", () => {
+    function nextQuestion() {
       currentQuestion++;
+      nextBtn.classList.add("hidden");
+
       if (currentQuestion < quizData.length) {
-        nextBtn.classList.add("hidden");
         loadQuestion();
       } else {
         showResult();
       }
-    });
-
-    function showResult() {
-      questionContainer.classList.add("hidden");
-      resultEl.classList.remove("hidden");
-      scoreEl.textContent = `You scored ${score} out of ${quizData.length} 🎉`;
     }
 
-    restartBtn.addEventListener("click", () => {
+    function showResult() {
+      questionScreen.classList.add("hidden");
+      resultScreen.classList.remove("hidden");
+      scoreText.textContent = `Your Score: ${score} / ${quizData.length}`;
+
+      if (score === quizData.length) reaction.textContent = "🌟 Perfect! You're a true Kite master!";
+      else if (score >= 7) reaction.textContent = "🔥 Great job! You understand Kite really well!";
+      else if (score >= 4) reaction.textContent = "✨ Not bad! A few more reads and you’ll be a pro!";
+      else reaction.textContent = "😅 You might need to revisit the basics of Kite!";
+    }
+
+    function restartQuiz() {
       currentQuestion = 0;
       score = 0;
-      resultEl.classList.add("hidden");
-      welcomeScreen.classList.remove("hidden");
-    });
+      resultScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+    }
   </script>
 </body>
 </html>

@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KiteAI Quiz</title>
+  <title>KITEAI Quiz</title>
   <style>
-    /* General Styling */
     body {
       font-family: "Poppins", sans-serif;
       background-color: #fffdd0; /* Cream background */
@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #5a3e1b; /* Brown text */
+      color: #5b3a29; /* Brown text */
       margin: 0;
     }
 
@@ -29,19 +29,19 @@
     }
 
     h1 {
-      color: #5a3e1b;
+      color: #5b3a29;
       margin-bottom: 10px;
     }
 
     p {
-      color: #555;
+      color: #5b3a29;
       font-size: 15px;
     }
 
     button {
       background-color: transparent;
-      border: 2px solid #5a3e1b;
-      color: #5a3e1b;
+      border: 2px solid #5b3a29;
+      color: #5b3a29;
       padding: 12px 25px;
       border-radius: 10px;
       font-size: 16px;
@@ -50,12 +50,12 @@
     }
 
     button:hover {
-      background-color: #5a3e1b;
+      background-color: #5b3a29;
       color: white;
     }
 
     .option {
-      background: #f8f6f0;
+      background: #f8f5ee;
       border: 2px solid transparent;
       padding: 12px;
       border-radius: 12px;
@@ -65,7 +65,7 @@
     }
 
     .option:hover {
-      background: #eae4d3;
+      background: #f0e4d7;
     }
 
     .option.correct {
@@ -84,30 +84,28 @@
 
     .question {
       font-weight: 600;
-      color: #333;
+      color: #5b3a29;
       margin-bottom: 20px;
     }
 
     .result {
       font-size: 20px;
       font-weight: bold;
-      color: #5a3e1b;
+      color: #5b3a29;
     }
   </style>
 </head>
 <body>
   <div class="quiz-container" id="quiz">
-    <h1>KiteAI</h1>
+    <h1>KITEAI</h1>
     <p>Test Your Knowledge</p>
 
-    <!-- Start Screen -->
     <div id="start-screen">
-      <h2>Welcome to KiteAI Quiz!</h2>
+      <h2>Welcome to QuizMaster!</h2>
       <p>Test your knowledge with our interactive quiz. You'll get immediate feedback on each question and see your final score at the end.</p>
       <button id="start-btn">Start Quiz</button>
     </div>
 
-    <!-- Question Screen -->
     <div id="question-screen" class="hidden">
       <p id="question-number"></p>
       <p class="question" id="question-text"></p>
@@ -115,7 +113,6 @@
       <button id="next-btn" class="hidden">Next Question</button>
     </div>
 
-    <!-- Result Screen -->
     <div id="result-screen" class="hidden">
       <h2>Quiz Completed!</h2>
       <p class="result" id="score-text"></p>

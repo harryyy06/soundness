@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KiteAI Quiz</title>
   <style>
+    /* General Styling */
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #fffdd0; /* Cream color */
+      background-color: #fffdd0; /* Cream background */
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #5a3e1b; /* Brown text color */
+      color: #5a3e1b; /* Brown text */
       margin: 0;
     }
 
@@ -28,12 +29,12 @@
     }
 
     h1 {
-      color: #5a3e1b; /* Brown */
+      color: #5a3e1b;
       margin-bottom: 10px;
     }
 
     p {
-      color: #666;
+      color: #555;
       font-size: 15px;
     }
 
@@ -54,7 +55,7 @@
     }
 
     .option {
-      background: #f4f3ff;
+      background: #f8f6f0;
       border: 2px solid transparent;
       padding: 12px;
       border-radius: 12px;
@@ -64,7 +65,7 @@
     }
 
     .option:hover {
-      background: #e8e6ff;
+      background: #eae4d3;
     }
 
     .option.correct {
@@ -99,12 +100,14 @@
     <h1>KiteAI</h1>
     <p>Test Your Knowledge</p>
 
+    <!-- Start Screen -->
     <div id="start-screen">
       <h2>Welcome to KiteAI Quiz!</h2>
       <p>Test your knowledge with our interactive quiz. You'll get immediate feedback on each question and see your final score at the end.</p>
       <button id="start-btn">Start Quiz</button>
     </div>
 
+    <!-- Question Screen -->
     <div id="question-screen" class="hidden">
       <p id="question-number"></p>
       <p class="question" id="question-text"></p>
@@ -112,6 +115,7 @@
       <button id="next-btn" class="hidden">Next Question</button>
     </div>
 
+    <!-- Result Screen -->
     <div id="result-screen" class="hidden">
       <h2>Quiz Completed!</h2>
       <p class="result" id="score-text"></p>

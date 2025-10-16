@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kite Blockchain Quiz</title>
+  <title>KiteAI Quiz</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #5e5ce6, #9b8cf3);
+      background-color: #fffdd0; /* Cream color */
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #333;
+      color: #5a3e1b; /* Brown text color */
       margin: 0;
     }
 
@@ -28,7 +28,7 @@
     }
 
     h1 {
-      color: #5e5ce6;
+      color: #5a3e1b; /* Brown */
       margin-bottom: 10px;
     }
 
@@ -38,9 +38,9 @@
     }
 
     button {
-      background-color: #6d63ff;
-      border: none;
-      color: white;
+      background-color: transparent;
+      border: 2px solid #5a3e1b;
+      color: #5a3e1b;
       padding: 12px 25px;
       border-radius: 10px;
       font-size: 16px;
@@ -49,7 +49,8 @@
     }
 
     button:hover {
-      background-color: #4a41d6;
+      background-color: #5a3e1b;
+      color: white;
     }
 
     .option {
@@ -89,22 +90,18 @@
     .result {
       font-size: 20px;
       font-weight: bold;
-      color: #5e5ce6;
-    }
-
-    .emoji {
-      font-size: 26px;
+      color: #5a3e1b;
     }
   </style>
 </head>
 <body>
   <div class="quiz-container" id="quiz">
-    <h1>KITE</h1>
-    <p>Blockchain for the Agentic Internet 🚀</p>
+    <h1>KiteAI</h1>
+    <p>Test Your Knowledge</p>
 
     <div id="start-screen">
-      <h2>Welcome to the Kite Quiz!</h2>
-      <p>Ready to see how much you know about the internet built for AI agents? Let's go!</p>
+      <h2>Welcome to KiteAI Quiz!</h2>
+      <p>Test your knowledge with our interactive quiz. You'll get immediate feedback on each question and see your final score at the end.</p>
       <button id="start-btn">Start Quiz</button>
     </div>
 
@@ -116,9 +113,8 @@
     </div>
 
     <div id="result-screen" class="hidden">
-      <h2>🎉 Quiz Completed!</h2>
+      <h2>Quiz Completed!</h2>
       <p class="result" id="score-text"></p>
-      <p id="reaction"></p>
       <button id="restart-btn">Restart Quiz</button>
     </div>
   </div>
@@ -126,104 +122,29 @@
   <script>
     const quizData = [
       {
-        question: "🌐 What does Kite aim to bring to the internet?",
-        options: [
-          "More memes and cat videos 😸",
-          "Identity, trust, and scalable payments for AI agents",
-          "Faster web browsers",
-          "Social media for robots"
-        ],
+        question: "Which of the following is NOT a blockchain consensus mechanism?",
+        options: ["Proof of Stake", "Proof of Work", "Proof of Burn", "Proof of Chat"],
+        correct: 3
+      },
+      {
+        question: "What does Web3 primarily focus on?",
+        options: ["Centralized servers", "Decentralization and blockchain", "Offline data storage", "Private social networks"],
         correct: 1
       },
       {
-        question: "🤖 What makes Kite different from traditional blockchains?",
-        options: [
-          "It focuses on AI agents and the agentic internet",
-          "It uses emojis to verify transactions 😂",
-          "It runs on quantum computers only",
-          "It has no need for smart contracts"
-        ],
+        question: "Which company created the Solidity programming language?",
+        options: ["Ethereum Foundation", "Google", "Meta", "Bitcoin Org"],
         correct: 0
       },
       {
-        question: "🧩 What does 'EVM-compatible' mean in Kite?",
-        options: [
-          "It can play video games",
-          "It supports Ethereum smart contracts",
-          "It replaces Ethereum entirely",
-          "It has its own app store"
-        ],
-        correct: 1
+        question: "In blockchain, what does a 'node' refer to?",
+        options: ["A hacker", "A central server", "A participant that maintains the ledger", "A crypto wallet"],
+        correct: 2
       },
       {
-        question: "🔐 Agent Native Identity allows agents to...",
-        options: [
-          "Share their owner’s reputation securely",
-          "Forget passwords daily",
-          "Clone themselves infinitely",
-          "Create memes autonomously"
-        ],
-        correct: 0
-      },
-      {
-        question: "💳 Kite’s Agent Native Payments make it possible to...",
-        options: [
-          "Pay machines instantly with stablecoins",
-          "Buy NFTs on Mars",
-          "Pay using only Bitcoin",
-          "Send payments via email"
-        ],
-        correct: 0
-      },
-      {
-        question: "🛠️ What’s unique about Kite’s architecture?",
-        options: [
-          "It’s modular and developers can pick components freely",
-          "It only works on old browsers",
-          "It uses a single fixed structure for all projects",
-          "It doesn’t allow SDK integrations"
-        ],
-        correct: 0
-      },
-      {
-        question: "⚙️ Proof of AI in Kite helps with...",
-        options: [
-          "Validating agent contributions and rewards",
-          "Detecting human errors",
-          "Mining using physical gold",
-          "Running 3D games"
-        ],
-        correct: 0
-      },
-      {
-        question: "🎯 Why should developers build on Kite?",
-        options: [
-          "Because it has AI-first infrastructure and low latency",
-          "Because it mines crypto faster",
-          "Because it gives free pizza",
-          "Because it doesn’t use smart contracts"
-        ],
-        correct: 0
-      },
-      {
-        question: "👥 Who can benefit from the Kite ecosystem?",
-        options: [
-          "AI users, researchers, and blockchain developers",
-          "Only gamers",
-          "Only government agencies",
-          "Only NFT traders"
-        ],
-        correct: 0
-      },
-      {
-        question: "🚀 The goal of Kite is to build...",
-        options: [
-          "An AI-native, trustworthy, and scalable internet",
-          "A gaming console",
-          "A social network for pets",
-          "A meme-based blockchain"
-        ],
-        correct: 0
+        question: "Which of these is NOT a type of cryptocurrency wallet?",
+        options: ["Hot wallet", "Cold wallet", "Warm wallet", "Paper wallet"],
+        correct: 2
       }
     ];
 
@@ -237,7 +158,6 @@
     const nextBtn = document.getElementById("next-btn");
     const scoreText = document.getElementById("score-text");
     const restartBtn = document.getElementById("restart-btn");
-    const reaction = document.getElementById("reaction");
 
     let currentQuestion = 0;
     let score = 0;
@@ -299,11 +219,6 @@
       questionScreen.classList.add("hidden");
       resultScreen.classList.remove("hidden");
       scoreText.textContent = `Your Score: ${score} / ${quizData.length}`;
-
-      if (score === quizData.length) reaction.textContent = "🌟 Perfect! You're a true Kite master!";
-      else if (score >= 7) reaction.textContent = "🔥 Great job! You understand Kite really well!";
-      else if (score >= 4) reaction.textContent = "✨ Not bad! A few more reads and you’ll be a pro!";
-      else reaction.textContent = "😅 You might need to revisit the basics of Kite!";
     }
 
     function restartQuiz() {

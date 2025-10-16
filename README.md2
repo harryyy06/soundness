@@ -1,253 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KITEAI Quiz</title>
-    <style>
-      body {
-        font-family: "Poppins", sans-serif;
-        background-color: #fffdd0; /* Cream */
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #5b3a29; /* Brown */
-        margin: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KITEAI Quiz</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #7f7ce0, #9d8ce0);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      margin: 0;
+    }
+    .quiz-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
+      text-align: center;
+      transition: 0.4s ease;
+    }
+    h1 {
+      color: #5a4fcf;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #666;
+      font-size: 15px;
+    }
+    button {
+      background-color: #7f7ce0;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #5a4fcf;
+    }
+    .option {
+      background: #f4f3ff;
+      border: 2px solid transparent;
+      padding: 12px;
+      border-radius: 12px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .option:hover {
+      background: #e8e6ff;
+    }
+    .option.correct {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+    .option.wrong {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+    .hidden {
+      display: none;
+    }
+    .question {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .result {
+      font-size: 20px;
+      font-weight: bold;
+      color: #5a4fcf;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz">
+    <h1>RIALO</h1>
+    <p>Test Your Knowledge</p>
 
-      .quiz-container {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        width: 90%;
-        max-width: 600px;
-        padding: 40px;
-        text-align: center;
-        transition: 0.4s ease;
-      }
-
-      h1 {
-        color: #5b3a29;
-        margin-bottom: 10px;
-      }
-
-      p {
-        color: #5b3a29;
-        font-size: 15px;
-      }
-
-      button {
-        background-color: transparent;
-        border: 2px solid #5b3a29;
-        color: #5b3a29;
-        padding: 12px 25px;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      button:hover {
-        background-color: #5b3a29;
-        color: white;
-      }
-
-      .option {
-        background: #f8f5ee;
-        border: 2px solid transparent;
-        padding: 12px;
-        border-radius: 12px;
-        margin: 10px 0;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .option:hover {
-        background: #f0e4d7;
-      }
-
-      .option.correct {
-        background: #d4edda;
-        border-color: #28a745;
-      }
-
-      .option.wrong {
-        background: #f8d7da;
-        border-color: #dc3545;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .question {
-        font-weight: 600;
-        color: #5b3a29;
-        margin-bottom: 20px;
-      }
-
-      .result {
-        font-size: 20px;
-        font-weight: bold;
-        color: #5b3a29;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="quiz-container" id="quiz">
-      <h1>KITEAI</h1>
-      <p>Test Your Knowledge</p>
-
-      <div id="start-screen">
-        <h2>Welcome to QuizMaster!</h2>
-        <p>
-          Test your knowledge with our interactive quiz. You'll get immediate feedback on each question and see your final score at the end.
-        </p>
-        <button id="start-btn">Start Quiz</button>
-      </div>
-
-      <div id="question-screen" class="hidden">
-        <p id="question-number"></p>
-        <p class="question" id="question-text"></p>
-        <div id="options-container"></div>
-        <button id="next-btn" class="hidden">Next Question</button>
-      </div>
-
-      <div id="result-screen" class="hidden">
-        <h2>Quiz Completed!</h2>
-        <p class="result" id="score-text"></p>
-        <button id="restart-btn">Restart Quiz</button>
-      </div>
+    <div id="start-screen">
+      <h2>Welcome to QuizMaster!</h2>
+      <p>Test your knowledge with our interactive quiz. You'll get immediate feedback on each question and see your final score at the end.</p>
+      <button id="start-btn">Start Quiz</button>
     </div>
 
-    <script>
-      const quizData = [
-        {
-          question:
-            "Which of the following is NOT a blockchain consensus mechanism?",
-          options: [
-            "Proof of Stake",
-            "Proof of Work",
-            "Proof of Burn",
-            "Proof of Chat",
-          ],
-          correct: 3,
-        },
-        {
-          question: "What does Web3 primarily focus on?",
-          options: [
-            "Centralized servers",
-            "Decentralization and blockchain",
-            "Offline data storage",
-            "Private social networks",
-          ],
-          correct: 1,
-        },
-        {
-          question: "Which company created the Solidity programming language?",
-          options: ["Ethereum Foundation", "Google", "Meta", "Bitcoin Org"],
-          correct: 0,
-        },
-        {
-          question: "In blockchain, what does a 'node' refer to?",
-          options: [
-            "A hacker",
-            "A central server",
-            "A participant that maintains the ledger",
-            "A crypto wallet",
-          ],
-          correct: 2,
-        },
-        {
-          question: "Which of these is NOT a type of cryptocurrency wallet?",
-          options: ["Hot wallet", "Cold wallet", "Warm wallet", "Paper wallet"],
-          correct: 2,
-        },
-      ];
+    <div id="question-screen" class="hidden">
+      <p id="question-number"></p>
+      <p class="question" id="question-text"></p>
+      <div id="options-container"></div>
+      <button id="next-btn" class="hidden">Next Question</button>
+    </div>
 
-      const startBtn = document.getElementById("start-btn");
-      const questionScreen = document.getElementById("question-screen");
-      const startScreen = document.getElementById("start-screen");
-      const resultScreen = document.getElementById("result-screen");
-      const questionNumber = document.getElementById("question-number");
-      const questionText = document.getElementById("question-text");
-      const optionsContainer = document.getElementById("options-container");
-      const nextBtn = document.getElementById("next-btn");
-      const scoreText = document.getElementById("score-text");
-      const restartBtn = document.getElementById("restart-btn");
+    <div id="result-screen" class="hidden">
+      <h2>Quiz Completed!</h2>
+      <p class="result" id="score-text"></p>
+      <button id="restart-btn">Restart Quiz</button>
+    </div>
+  </div>
 
-      let currentQuestion = 0;
-      let score = 0;
-
-      startBtn.addEventListener("click", startQuiz);
-      nextBtn.addEventListener("click", nextQuestion);
-      restartBtn.addEventListener("click", restartQuiz);
-
-      function startQuiz() {
-        startScreen.classList.add("hidden");
-        questionScreen.classList.remove("hidden");
-        loadQuestion();
+  <script>
+    const quizData = [
+      {
+        question: "Which of the following is NOT a blockchain consensus mechanism?",
+        options: ["Proof of Stake", "Proof of Work", "Proof of Burn", "Proof of Chat"],
+        correct: 3
+      },
+      {
+        question: "What does Web3 primarily focus on?",
+        options: ["Centralized servers", "Decentralization and blockchain", "Offline data storage", "Private social networks"],
+        correct: 1
+      },
+      {
+        question: "Which company created the Solidity programming language?",
+        options: ["Ethereum Foundation", "Google", "Meta", "Bitcoin Org"],
+        correct: 0
+      },
+      {
+        question: "In blockchain, what does a 'node' refer to?",
+        options: ["A hacker", "A central server", "A participant that maintains the ledger", "A crypto wallet"],
+        correct: 2
+      },
+      {
+        question: "Which of these is NOT a type of cryptocurrency wallet?",
+        options: ["Hot wallet", "Cold wallet", "Warm wallet", "Paper wallet"],
+        correct: 2
       }
+    ];
 
-      function loadQuestion() {
-        const current = quizData[currentQuestion];
-        questionNumber.textContent = `Question ${
-          currentQuestion + 1
-        } of ${quizData.length}`;
-        questionText.textContent = current.question;
-        optionsContainer.innerHTML = "";
+    const startBtn = document.getElementById("start-btn");
+    const questionScreen = document.getElementById("question-screen");
+    const startScreen = document.getElementById("start-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const questionNumber = document.getElementById("question-number");
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    const nextBtn = document.getElementById("next-btn");
+    const scoreText = document.getElementById("score-text");
+    const restartBtn = document.getElementById("restart-btn");
 
-        current.options.forEach((option, index) => {
-          const button = document.createElement("div");
-          button.classList.add("option");
-          button.textContent = option;
-          button.addEventListener("click", () => selectOption(index));
-          optionsContainer.appendChild(button);
-        });
-      }
+    let currentQuestion = 0;
+    let score = 0;
 
-      function selectOption(selected) {
-        const current = quizData[currentQuestion];
-        const options = document.querySelectorAll(".option");
+    startBtn.addEventListener("click", startQuiz);
+    nextBtn.addEventListener("click", nextQuestion);
+    restartBtn.addEventListener("click", restartQuiz);
 
-        options.forEach((option, index) => {
-          option.style.pointerEvents = "none";
-          if (index === current.correct) {
-            option.classList.add("correct");
-          } else if (index === selected && index !== current.correct) {
-            option.classList.add("wrong");
-          }
-        });
+    function startQuiz() {
+      startScreen.classList.add("hidden");
+      questionScreen.classList.remove("hidden");
+      loadQuestion();
+    }
 
-        if (selected === current.correct) score++;
-        nextBtn.classList.remove("hidden");
-      }
+    function loadQuestion() {
+      const current = quizData[currentQuestion];
+      questionNumber.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+      questionText.textContent = current.question;
+      optionsContainer.innerHTML = "";
 
-      function nextQuestion() {
-        currentQuestion++;
-        nextBtn.classList.add("hidden");
+      current.options.forEach((option, index) => {
+        const button = document.createElement("div");
+        button.classList.add("option");
+        button.textContent = option;
+        button.addEventListener("click", () => selectOption(index));
+        optionsContainer.appendChild(button);
+      });
+    }
 
-        if (currentQuestion < quizData.length) {
-          loadQuestion();
-        } else {
-          showResult();
+    function selectOption(selected) {
+      const current = quizData[currentQuestion];
+      const options = document.querySelectorAll(".option");
+
+      options.forEach((option, index) => {
+        option.style.pointerEvents = "none";
+        if (index === current.correct) {
+          option.classList.add("correct");
+        } else if (index === selected && index !== current.correct) {
+          option.classList.add("wrong");
         }
-      }
+      });
 
-      function showResult() {
-        questionScreen.classList.add("hidden");
-        resultScreen.classList.remove("hidden");
-        scoreText.textContent = `Your Score: ${score} / ${quizData.length}`;
-      }
+      if (selected === current.correct) score++;
+      nextBtn.classList.remove("hidden");
+    }
 
-      function restartQuiz() {
-        currentQuestion = 0;
-        score = 0;
-        resultScreen.classList.add("hidden");
-        startScreen.classList.remove("hidden");
+    function nextQuestion() {
+      currentQuestion++;
+      nextBtn.classList.add("hidden");
+
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
       }
-    </script>
-  </body>
+    }
+
+    function showResult() {
+      questionScreen.classList.add("hidden");
+      resultScreen.classList.remove("hidden");
+      scoreText.textContent = `Your Score: ${score} / ${quizData.length}`;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      resultScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+    }
+  </script>
+</body>
 </html>
